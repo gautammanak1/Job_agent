@@ -45,7 +45,7 @@ def get_job_details(job_role, rapidapi_key):
 @alice.on_interval(period=30.0)
 async def request_job_details(ctx: Context):
     job_role = input("Enter the job role: ")
-    rapidapi_key = "be36d48f25msh2cae51229981e29p1d0cc1jsn5e058b8dbb93"  # Fill in with your RapidAPI key
+    rapidapi_key = ""  # Fill in with your RapidAPI key
     details = get_job_details(job_role, rapidapi_key)
     await ctx.send(
         bob.address,
@@ -82,3 +82,4 @@ bureau.add(bob)
 
 if __name__ == "__main__":
     bureau.run()
+##be36d48f25msh2cae51229981e29p1d0cc1jsn5e058b8dbb93
