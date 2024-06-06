@@ -1,8 +1,8 @@
-# Job Details Exchange System
+# Job Finder 
 
 ## Overview
 
-The Job Details Exchange System is a decentralized application (DApp) built using Python and the uAgents framework. It allows two agents, Alice and Bob, to exchange job details securely and efficiently using a decentralized network. This system utilizes RapidAPI to fetch job details based on user input.
+The JJob Finder is a decentralized application (DApp) built using Python and the uAgents framework. It allows two agents, User1 and User2 , to exchange job details securely and efficiently using a decentralized network. This system utilizes RapidAPI to fetch job details based on user input.
 
 ## Features
 
