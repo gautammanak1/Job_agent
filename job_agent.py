@@ -1,4 +1,4 @@
-import http.client
+import requests
 import json
 from uagents import Agent, Bureau, Context, Model
 from uagents.network import wait_for_tx_to_complete
@@ -19,8 +19,8 @@ fund_agent_if_low(bob.wallet.address())
 fund_agent_if_low(alice.wallet.address())
 
 def get_job_details(job_role, rapidapi_key):
-    conn = http.client.HTTPSConnection("indeed11.p.rapidapi.com")
-
+    url = "https://indeed11.p.rapidapi.com/"
+    
     payload = {
         "search_terms": job_role,
         "location": "United States",
@@ -33,19 +33,18 @@ def get_job_details(job_role, rapidapi_key):
         'Content-Type': "application/json"
     }
 
-    conn.request("POST", "/", json.dumps(payload), headers)
-
-    res = conn.getresponse()
-    data = res.read()
-
-    return data.decode("utf-8")
-
+    response = requests.post(url, headers=headers, json=payload)
+    
+    if response.status_code == 200:
+        return response.text
+    else:
+        return f"Error: {response.status_code} - {response.text}"
 
 
 @alice.on_interval(period=30.0)
 async def request_job_details(ctx: Context):
     job_role = input("Enter the job role: ")
-    rapidapi_key = ""  # Fill in with your RapidAPI key
+    rapidapi_key = ""  # cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88 (Api)
     details = get_job_details(job_role, rapidapi_key)
     await ctx.send(
         bob.address,
@@ -66,13 +65,12 @@ async def fetch_job_details(ctx: Context, sender: str, msg: JobDetailsRequest):
     )
     ctx.logger.info(f"Fetched job details: {details}")
 
-async def confirm_transaction(ctx: Context, sender: str, msg:JobDetailsRequest):
-    ctx.logger.info(f"Received  {sender}: {msg}")
+async def confirm_transaction(ctx: Context, sender: str, msg: JobDetailsRequest):
+    ctx.logger.info(f"Received {sender}: {msg}")
     tx_resp = await wait_for_tx_to_complete(msg.tx_hash, ctx.ledger)
     coin_received = tx_resp.events["coin_received"]
     if (
         coin_received["receiver"] == str(ctx.wallet.address())
-     
     ):
         ctx.logger.info(f"Job Find successful: {coin_received}")
 
@@ -82,4 +80,3 @@ bureau.add(bob)
 
 if __name__ == "__main__":
     bureau.run()
-##be36d48f25msh2cae51229981e29p1d0cc1jsn5e058b8dbb93
