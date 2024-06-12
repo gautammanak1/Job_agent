@@ -72,5 +72,5 @@ This project is licensed under the MIT License.
 
 For any inquiries or support, feel free to reach out to [gautammanak1@gmail.com](mailto:gautammanak1@gmail.com).
 
-Save this content to a file named `README.md` in the same directory as your `job_agent.py` script. This file provides clear instructions and information about the project, helping others understand how to set it up and use it effectively.
+
 
