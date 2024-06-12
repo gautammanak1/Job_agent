@@ -38,7 +38,7 @@ def get_job_details(job_role, rapidapi_key):
 @agent.on_interval(period=30.0)
 async def request_job_details(ctx: Context):
     job_role = input("Enter the job role: ")
-    rapidapi_key = "cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88"  # Add your RapidAPI key here
+    rapidapi_key = ""  # Add your RapidAPI key here cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88
     details = get_job_details(job_role, rapidapi_key)
     ctx.logger.info(f"Job details for {job_role}: {details}")
 
