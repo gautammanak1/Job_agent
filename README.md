@@ -1,58 +1,76 @@
-# Job Finder 
+# Job Agent
 
-## Overview
+This project sets up a single agent that periodically requests job details from the Indeed API using RapidAPI. The agent prompts the user for a job role and retrieves job details based on the provided role.
 
-The JJob Finder is a decentralized application (DApp) built using Python and the uAgents framework. It allows two agents, User1 and User2 , to exchange job details securely and efficiently using a decentralized network. This system utilizes RapidAPI to fetch job details based on user input.
+## Prerequisites
 
-## Features
+- Python 3.6 or higher
+- RapidAPI account and subscription to the Indeed API
+- Installed Python packages: `requests`, `uagents`
 
-- **Decentralized Communication**: Agents Alice and Bob communicate directly through a decentralized network, ensuring privacy and security.
-- **Job Details Exchange**: Alice can request job details from Bob by specifying the job role, and Bob can respond with the relevant details.
-- **API Integration**: The system integrates with the RapidAPI platform to fetch job details from external sources.
-- **Transaction Confirmation**: Provides transaction confirmation functionality to ensure successful completion of transactions.
+## Installation
 
-## Components
+1. **Clone the repository** (or download the script directly):
+   ```sh
+   git clone https://github.com/yourusername/job-agent.git
+   cd job-agent
 
-### Agents
 
-- **Alice**: Initiates the request for job details.
-- **Bob**: Receives the request from Alice and responds with the requested job details.
+## Install the required Python packages
 
-### Models
+```sh
+pip install uagents
 
-- **JobDetailsRequest**: Defines the structure of the message sent by Alice to request job details from Bob.
-- **JobDetailsResponse**: Defines the structure of the message sent by Bob in response to Alice's request.
+```
+## Setup
+1. **Subscribe to the Indeed API on RapidAPI:**
 
-### Functions
+- Go to RapidAPI.
+- Search for the Indeed API.
+- Subscribe to the API and get your API key.
+  
+2.**Update the Script with Your API Key 🔑 :**
 
-- **get_job_details**: Makes an API call to fetch job details based on the provided job role and RapidAPI key.
-- **request_job_details**: Initiates the process of requesting job details from Bob.
-- **fetch_job_details**: Handles the request from Alice and fetches the job details from the API.
+- Open the job_agent.py file.
+- Find the line where rapidapi_key is defined and add your RapidAPI key
 
+```sh
+rapidapi_key = "your_rapidapi_key_here"  # Add your RapidAPI key here
+
+```
 
 ## Usage
 
-1. Ensure Python and the required libraries are installed.
-2. Run the script `job_details_exchange.py`.
-3. Follow the prompts to input the job role.
-4. Agents Alice and Bob will exchange messages, and job details will be fetched using the RapidAPI integration.
+### Run the Script:
 
-## Configuration
+```sh
+python job_agent.py
+```
 
-- **RapidAPI Key**: Replace the placeholder with your RapidAPI key in the `request_job_details` function.
+## Enter the Job Role:
 
-## Dependencies
+When prompted, enter the job role you want to search for (e.g., Web Developer).
 
-- **uAgents**: A Python framework for building decentralized applications.
-- **http.client**: The HTTP client library in Python used for making API requests.
-- **json**: A lightweight data interchange format.
-- **asyncio**: A library to write concurrent code using the async/await syntax.
-- **typing**: Provides support for type hints.
+## View Job Details:
 
-## Contribution
+The agent will fetch and log the job details for the specified role.
 
-Contributions are welcome! If you find any issues or have suggestions for improvement, please open an issue or submit a pull request.
+# Project Structure
 
+## job-agent/
+- `job_agent.py`: The main script that sets up and runs the agent.
+- `README.md`: This readme file.
+
+## Description
+`job_agent.py` is the main script responsible for setting up and running the agent. This project is licensed under the MIT License.
+
+## Instructions
+Save this content to a file named `README.md` in the same directory as your `job_agent.py` script. This file provides clear instructions and information about the project, helping others understand how to set it up and use it effectively.
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. 
+
+For any inquiries or support, feel free to reach out to [gautammanak1@gmail.com](mailto:gautammanak1@gmail.com).
+
+Save this content to a file named `README.md` in the same directory as your `job_agent.py` script. This file provides clear instructions and information about the project, helping others understand how to set it up and use it effectively.
+
