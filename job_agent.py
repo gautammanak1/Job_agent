@@ -32,7 +32,7 @@ def get_job_details(job_role, rapidapi_key):
 
 # Hardcoded values for job role and RapidAPI key
 job_role = "Software Engineer"
-rapidapi_key = ""  # Replace with your actual RapidAPI key
+rapidapi_key = ""    # Replace with your actual RapidAPI key   cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88 
 
 # Interval task to request job details
 @agent.on_interval(period=30.0)
