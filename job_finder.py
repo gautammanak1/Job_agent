@@ -1,17 +1,17 @@
 import os
 import sys
-from pydantic import Field
 import requests
-from ai_engine import UAgentResponse, UAgentResponseType
+from pydantic import Field
 from uagents import Agent, Context, Protocol, Model
 from uagents.setup import fund_agent_if_low
+from ai_engine import UAgentResponse, UAgentResponseType
 
 # Pydantic model for JobRequest
 class JobRequest(Model):
     job_description: str = Field(description="Give details of job you are looking for")
 
 # Function to get job details from Indeed API
-def get_job_details(job_role, rapidapi_key):
+async def get_job_details(job_role, rapidapi_key):
     url = "https://indeed11.p.rapidapi.com/"
     payload = {
         "search_terms": job_role,
@@ -35,13 +35,11 @@ def get_job_details(job_role, rapidapi_key):
 
 # Define the job role and RapidAPI key
 job_role = "Software Engineer"
-rapidapi_key = ""  # Replace with your actual RapidAPI key  cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88
+rapidapi_key = ("cf5c0e8526mshf9862937a0971b1p1b74dfjsn0f328599cc88 ") # It's better to use environment variables for sensitive information
 
 # Create the agent
 agent = Agent(name="Job Finder Agent")
 print(f"Your agent's address is: {agent.address}")
-
-
 
 # Define the protocol
 job_protocol = Protocol("Job Finder Protocol")
@@ -50,8 +48,8 @@ job_protocol = Protocol("Job Finder Protocol")
 @job_protocol.on_message(model=JobRequest, replies={UAgentResponse})
 async def load_job(ctx: Context, sender: str, msg: JobRequest):
     ctx.logger.info(f"Received job request: {msg.job_description}")
-    details = get_job_details(job_role, rapidapi_key)
-    ctx.logger.info(f"Job details for {job_role}: {details}")
+    details = await get_job_details(msg.job_description, rapidapi_key)
+    ctx.logger.info(f"Job details for {msg.job_description}: {details}")
 
     if "error" in details:
         message = f"Error {details['error']}: {details['message']}"
@@ -69,3 +67,6 @@ async def load_job(ctx: Context, sender: str, msg: JobRequest):
 
 # Include the protocol in the agent
 agent.include(job_protocol, publish_manifest=True)
+
+# Ensure the agent has enough funds
+fund_agent_if_low(agent.wallet.address())
