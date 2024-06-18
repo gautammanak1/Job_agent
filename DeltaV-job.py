@@ -29,9 +29,12 @@ async def get_job_details(job_role, rapidapi_key):
     else:
         return {"error": response.status_code, "message": response.text}
 
+
+
+
 # Hardcoded values for job role and RapidAPI key
-job_role = "Software Engineer , Web developer , Sales , Software Developer "
-rapidapi_key = "1c9df812ebmsh2f7fd956a0cb11ep18b1b6jsne9a64fafecb0"  # Replace with your actual RapidAPI key  1c9df812ebmsh2f7fd956a0cb11ep18b1b6jsne9a64fafecb0
+job_role = "Software Engineer , Web Developer, Sales , Ai Engineer , Community Manager , HR"
+rapidapi_key = ""  # Replace with your actual RapidAPI key  1c9df812ebmsh2f7fd956a0cb11ep18b1b6jsne9a64fafecb0
 
 @job_protocol.on_message(model=JobRequest, replies={UAgentResponse})
 async def load_job(ctx: Context, sender: str, msg: JobRequest):
@@ -48,9 +51,23 @@ async def load_job(ctx: Context, sender: str, msg: JobRequest):
         details = await get_job_details(msg.job_description, rapidapi_key)
         ctx.logger.info(f"Job details for {msg.job_description}: {details}")
         message = ""
-        for detail in details: 
+        for detail in details:
             ctx.logger.info(detail)
-            message =  message + detail["url"]+ "\n"
+            # Extracting job details
+            job_url = detail['url']
+            job_title = detail['job_title']
+            company_name = detail['company_name']
+            location = detail['location']
+            salary = detail['salary']
+            summary = detail['summary']
+            job_date = detail.get('date', 'Just posted')
+
+            # Formatting the message
+            message += (f"<a href='{job_url}'>{job_title}</a> - {job_date}\n"
+                        f"Company: {company_name}\n"
+                        f"Location: {location}\n"
+                        f"Salary: {salary}\n"
+                        f"Summary: {summary}\n\n")
     except Exception as e:
         ctx.logger.error(f"An error occurred while fetching job details: {e}")
         message = f"An unexpected error occurred: {e}"
@@ -58,6 +75,6 @@ async def load_job(ctx: Context, sender: str, msg: JobRequest):
     await ctx.send(sender, UAgentResponse(message=message, type=UAgentResponseType.FINAL))
 
 # Include the protocol in the agent
-Agent.include(job_protocol, publish_manifest=True)
+agent.include(job_protocol, publish_manifest=True)
 
 
